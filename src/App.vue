@@ -1,28 +1,29 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <router-view/>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import {mapState} from 'vuex'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+
+
+        computed: {
+            ...mapState('auth', ['user'])
+        }
+
+    }
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+
+  @import 'assets/scss/spacing.module';
+  @import 'assets/scss/animation.module';
+  @import 'assets/scss/main.module';
+  @import 'assets/scss/form.module';
+  @import 'assets/icons/all.min.css';
+
 </style>
