@@ -1,0 +1,80 @@
+
+.winwin-wrapper-signup {
+  align-content: center;
+  width: 100%;
+  background: linear-gradient(45deg, #ffcb44, #ffe35e);
+
+  .winwin-container-signup {
+
+    background: #fff;
+    padding: 1.5rem;
+    .field {
+      text-align: left;
+    }
+    .label {
+      text-transform: uppercase;
+      color: #3a3a3a;
+      font-size: 9pt;
+    }
+    .input {
+      background: transparent;
+      border: 2px solid #ffe35e;
+    }
+  }
+}
+
+.winwin-login-form {
+  .field {
+    text-align: left;
+  }
+  .label {
+    text-transform: uppercase;
+    color: #3a3a3a;
+    font-size: 9pt;
+  }
+  .input {
+    background: transparent;
+    border: 2px solid #ffe35e;
+  }
+}
+
+.winwin-wrapper-login {
+  align-content: center;
+  width: 100%;
+  background: linear-gradient(45deg, #ffcb44, #ffe35e);
+
+  .winwin-container-login {
+    padding: 1.5rem;
+    background: #fff;
+  }
+}
+
+.winwin-login-form {
+  .field {
+    text-align: left;
+  }
+  .label {
+    text-transform: uppercase;
+    color: #3a3a3a;
+    font-size: 9pt;
+  }
+  .input {
+    background: transparent;
+    border: 2px solid #ffe35e;
+  }
+}
+
+
+  .loan-form {
+    padding: 24px;
+    background: #fff;
+
+  }
+
+  .vue-slider-process {
+    background: linear-gradient(45deg, $primary, $accent) !important;
+  }
+
+  .vue-slider-dot-handle {
+    background: #f7f7f7 !important;
+  }

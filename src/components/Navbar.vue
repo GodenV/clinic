@@ -59,7 +59,7 @@
                             class="navbar-item is-slide"
                             @click.native="navbarActive=false"
                     >
-                        О нас
+                        Главная
                     </router-link>
                     <router-link
                             :to="{name: 'faq'}"
@@ -73,7 +73,7 @@
                             class="navbar-item is-slide"
                             @click.native="navbarActive=false"
                     >
-                        Погасить займ
+                        Записаться на прием
                     </router-link>
                     <router-link
                             :to="{ name: 'investor' }"

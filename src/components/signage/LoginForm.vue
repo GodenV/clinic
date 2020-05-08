@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
     name: 'login',
@@ -50,11 +50,12 @@ export default {
         },
 
     computed: {
-    ...mapState('auth', ['user'])
-  },
+    ...mapState('auth', ['user']),
+    ...mapGetters('auth', ['isAuthenticated', 'isAdmin', 'isDoctor', 'isUser'])
+    },
     methods:{
         ...mapActions('auth', [
-      'login'
+             'login'
     ]),
 
     performLogin () {
@@ -63,7 +64,12 @@ export default {
       this.login(this.loginForm)
         .then(() => {
           this.loading = false
-          this.$router.push({ name: 'client-dashboard' })
+            if(this.isAdmin) {
+                this.$router.push({name: 'admin-dashboard'})
+            }
+            else {
+                this.$router.push({name: 'client-dashboard'})
+            }
         })
         .catch(() => {
           this.loading = false

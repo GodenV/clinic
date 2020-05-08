@@ -1,0 +1,21 @@
+@import "~bulma/sass/utilities/_all";
+
+@import "bulkit/core_deep-blue";
+
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+@import '~bulma-divider';
+@import "./dashboard-contacts";
+
+.social a {
+  color: $primary !important;
+}
+
+.social a:hover {
+  color: $dark-invert !important;
+}
+.button.is-small.rounded {
+  border-radius: 500px;
+}

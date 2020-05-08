@@ -8,13 +8,13 @@
                          v-bind:class="{ 'right-panel-active': login}">
                         <div class="form-container sign-up-container columns is-vcentered">
                             <SignupForm/>
-                            <div class="auth-btn column is-12  has-text-centered">
+                            <div class="auth-btn padding-10 column is-12  has-text-centered">
                                 <a @click="change">Или войдите</a>
                             </div>
                         </div>
                         <div class="form-container sign-in-container columns is-vcentered">
                             <LoginForm/>
-                            <div class="auth-btn column is-12  has-text-centered">
+                            <div class="auth-btn padding-10 column is-12  has-text-centered">
                                 <a @click="change">Или
                                     зарегесрируйтесь</a>
                             </div>
@@ -107,8 +107,8 @@
 
             .auth-btn {
                 display: block !important;
+                height: 20px;
             }
-        ;
         }
     }
 
@@ -131,7 +131,6 @@
             0 10px 10px rgba(0, 0, 0, 0.22);
             position: relative;
             overflow: hidden;
-            width: 780px;
             max-width: 100%;
             min-height: 480px;
         }

@@ -214,20 +214,105 @@
                         </div>
                     </div>
                 </div>
-                <Map/>
+                <section class="online-work-container">
+
+                    <ParallaxContainer>
+                        <ParallaxImage
+                                :width="400"
+                                :height="200"
+                                :factor="0.5"
+                        >
+                            <div class="img-back">
+
+                            </div>
+                        </ParallaxImage>
+                    </ParallaxContainer>
+                    <div class="container has-text-left bls">
+                                <h1 class="is-size-2 has-text-black">Онлайн <br/> консультация</h1>
+                                <p class="is-size-4 has-text-black">Получите консультацию прямо сейчас  </p>
+                                <div class="has-text-black button light-btn button-signup btn-outlined is-bold btn-align rounded raised">
+                                    Записаться
+                                </div>
+                            </div>
+                </section>
+                <div class="container margin-top-200">
+                    <div class="is-size-1 has-text-centered has-text-weight-bold padding-25">Отделения</div>
+                    <VueSlickCarousel v-if="departments.length" v-bind="carouselSettings">
+                        <div class="carousel-el" v-for="department in departments" :key="department.id">
+                            <div class="photo-button is-size-5 has-text-white"><i class="fas fa-share"></i>
+                                {{department.name}}
+                            </div>
+                            <figure class="crop">
+                                <img :src="department.imageUrl">
+                            </figure>
+                        </div>
+                    </VueSlickCarousel>
+                </div>
+                <div class="container" >
+                    <div class="is-size-1 has-text-centered has-text-weight-bold padding-30">Наши специалисты</div>
+                    <VueSlickCarousel v-if="doctors.length" v-bind="carouselSettings">
+                        <div class="doctor is-multiline" v-for="doctor in doctors" :key="doctor.id">
+                            <figure class="circle-crop">
+                                <img :src="doctor.imageUrl">
+                            </figure>
+                            <div class="is-size-5 has-text-centered">
+                                {{doctor.name +" "+ doctor.surname +" "+ doctor.lastName}}
+                            </div>
+                            <div class="is-size-4 has-text-centered">
+                                {{doctor.specialization}}
+                            </div>
+                        </div>
+                    </VueSlickCarousel>
+                </div>
+                <section class="online-work-container">
+
+                    <ParallaxContainer class="parallax-container">
+                        <ParallaxImage
+                                :width="400"
+                                :height="200"
+                                :factor="0.5"
+                        >
+                            <div class="img-back-second">
+
+                            </div>
+                        </ParallaxImage>
+                    </ParallaxContainer>
+                    <div class="container has-text-left bls">
+                                <h1 class="is-size-2 has-text-black">Онлайн <br/> консультация</h1>
+                                <p class="is-size-4 has-text-black">Получите консультацию прямо сейчас  </p>
+                                <div class="has-text-black button light-btn button-signup btn-outlined is-bold btn-align rounded raised">
+                                    Записаться
+                                </div>
+                            </div>
+                </section>
+                <Map class="margin-top-200"/>
+                <Footer/>
             </div>
         </section>
     </div>
 </template>
 
 <script>
-    import Navbar from "@/components/Navbar";
-    import Map from "@/components/Map";
+    import Navbar from '@/components/Navbar'
+    import Map from '@/components/Map'
+    import Footer from "@/components/Footer";
+    import {getDepartments} from '@/api/departments'
+    import {getDoctors} from '@/api/doctors'
+    import VueSlickCarousel from 'vue-slick-carousel'
+    import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+    import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+    import ParallaxContainer from '@/components/parallax/ParallaxContainer'
+    import ParallaxImage from '@/components/parallax/ParallaxImage'
 
     export default {
         components: {
             Navbar,
             Map,
+            VueSlickCarousel,
+            Footer,
+            ParallaxContainer,
+            ParallaxImage,
+
         },
         metaInfo: {
             title: 'Главная',
@@ -243,19 +328,151 @@
                 interval: 3000,
                 animated: 'fade',
                 autoplay: true,
+                test: 0,
+                departments: [],
+                doctors: [],
+                carouselSettings: {
+                    "infinite": true,
+                    "slidesToShow": 3,
+                    "speed": 500,
+                    "rows": 2,
+                    "slidesPerRow": 1
+                }
             }
         },
+
         props: {
             msg: String
+        },
+        created() {
+            this.getDepartmentsList()
+            this.getDoctorsList()
+        },
+        methods: {
+            getDepartmentsList() {
+                this.loading = true
+                getDepartments()
+                    .then((response) => {
+                        this.departments = response.data
+                        this.loading = false
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        this.loading = false
+                    })
+            },
+            getDoctorsList() {
+                this.loading = true
+                getDoctors()
+                    .then((response) => {
+                        this.doctors = response.data
+                        this.loading = false
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        this.loading = false
+                    })
+            }
         }
     }
 </script>
 
 <style lang="scss">
+
     @import url('https://fonts.googleapis.com/css?family=Nunito:400,500,600,700,800');
 
     * {
         font-family: Nunito;
+    }
+
+    .margin-top-200{
+        margin-top: -200px!important;
+    }
+
+    .img-back {
+        width: 100%;
+        height: 1100px;
+        background-image: url('../assets/background-01.jpg');
+        background-size: cover;
+    }
+    .img-back-second {
+        width: 100%;
+        height: 1200px;
+        background-image: url('../assets/background-02.jpg');
+        background-size: cover;
+    }
+
+    .bls {
+        left: 100px;
+        bottom: 340px;
+    }
+
+    .doctor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .online-work-container{
+        padding-top: 10vh;
+    }
+
+    .carousel-el {
+        position: relative;
+    }
+
+    .circle-crop {
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 270px;
+            border-radius: 135px;
+        }
+
+        margin: auto;
+        width: 270px;
+        padding-bottom: 30px;
+    }
+
+    .crop {
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 330px;
+            border-radius: 10px;
+        }
+
+        margin: auto;
+        width: 330px;
+        padding-bottom: 30px;
+    }
+
+    .photo-button {
+        position: absolute;
+        top: 225px;
+        font-weight: bold;
+        right: 10px;
+        background-color: #2a4eb2;
+        padding: 10px;
+        border-radius: 5px;
+        width: 220px;
+        transition: all .8s ease;
+
+        i {
+            width: 0;
+            overflow: hidden;
+            transition: all .8s ease;
+        }
+
+        &:hover {
+            background-color: grey;
+
+            i {
+                width: 30px;
+                display: inline-block;
+            }
+        }
     }
 
     .schedule {
@@ -355,31 +572,5 @@
         margin: auto;
     }
 
-    .parallax {
-        perspective: 1px;
-        height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-
-    .parallax__layer {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-
-    .parallax__layer--base {
-        transform: translateZ(0);
-    }
-
-    .parallax__layer--back {
-        transform: translateZ(-1px);
-    }
-
-    .parallax-container {
-        display: block;
-    }
 
 </style>

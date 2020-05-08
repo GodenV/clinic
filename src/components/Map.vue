@@ -6,10 +6,10 @@
   :cluster-options="{
     1: {clusterDisableClickZoom: true}
   }"
-  @map-was-initialized="initHandler"
 >
 
     <ymap-marker
+            marker-id="1"
       marker-type="placemark"
       :coords="[54.6, 39.8]"
       hint-content="Hint content 1"
