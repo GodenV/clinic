@@ -13,7 +13,7 @@
         </b-field>
 
          <b-field label="Пароль" class="column is-8-desktop is-offset-2-desktop is-10-tablet is-offset-1-tablet is-10-mobile is-offset-1-mobile">
-            <b-input type="password" v-model="loginForm.password" v-bind:style="{color:'blue'}" password-reveal></b-input>
+            <b-input type="password" v-model="loginForm.password" password-reveal></b-input>
         </b-field>
 
           <div class="column is-6-desktop is-offset-3-desktop is-8-tablet is-offset-2-tablet is-10-mobile is-offset-1-mobile has-text-centered p-t-lg">

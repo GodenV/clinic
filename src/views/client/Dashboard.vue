@@ -1,10 +1,9 @@
 <template>
     <div>
+        <section class="section dashboard-section">
         <Navbar/>
+        </section>
         <div v-if="!(isCreateMedicalCard && isCreateCustomer)">
-            <section class="section dashboard-section">
-                <navbar/>
-            </section>
             <section
                     class="section"
                     style="padding-top: 2rem !important;"
@@ -24,8 +23,8 @@
                     />
                 </b-steps>
             </section>
-            <CustomerForm :customerId="customer.id" v-if="step===0"/>
-            <MedicalCardForm v-if="step===1"/>
+            <CustomerForm v-if="step===0" :afterSubmit="reloadData"/>
+            <MedicalCardForm :afterSubmit="reloadData" :customerId="customer.id" v-if="step===1"/>
         </div>
         <section v-else class="section">
             <div class="hero-body container dashboard-container">
@@ -35,33 +34,47 @@
                             <div class="inner">
                                 <div class="contact-block">
                                     <div class="contact-name no-margin-top border-bottom">
-                                        {{ "Керсновский Вадим Витальевич" }}
+                                        {{customer.surname+" "+customer.name+" "+customer.lastName}}
                                     </div>
                                     <div class="contact-name">
-                                        {{ "Город брест 20 улицца ляля" }}
+                                        {{ customer.medicalCard.registration }}
                                     </div>
                                     <div class="stats-block">
                                         <div class="stat">
                                             <span>Телефон</span>
-                                            <span class="is-size-5">{{ +375336031780 }}</span>
+                                            <span class="is-size-5">{{ customer.phone }}</span>
                                         </div>
                                         <div class="stat">
-                                            <span>Первоначальная сумма</span>
-                                            <span class="is-size-5">{{  }}</span>
+                                            <span>Пол</span>
+                                            <span class="is-size-5">{{ genders[customer.medicalCard.gender]}}</span>
                                         </div>
                                     </div>
                                     <div class="stats-block">
                                         <div class="stat">
-                                            <span>Долг</span>
-                                            <span class="is-size-5">{{  }}</span>
+                                            <span>Рост</span>
+                                            <span class="is-size-5">{{ customer.medicalCard.height }}см</span>
                                         </div>
                                         <div class="stat">
-                                            <span>Ставка</span>
-                                            <span class="is-size-5">{{  }}%</span>
+                                            <span>Вес</span>
+                                            <span class="is-size-5">{{ customer.medicalCard.weight }}кг</span>
                                         </div>
                                         <div class="stat">
-                                            <span>Срок</span>
-                                            <span class="is-size-5">{{  }} мес.</span>
+                                            <span>Дата рождения</span>
+                                            <span class="is-size-5">{{ customer.medicalCard.birthday }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="contact-block">
+                                        <div class="contact-name">
+                                            <span class="name-text">Хронические заболевания</span>
+                                            <span>
+                                             {{ customer.medicalCard.chronicDiseases }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="contact-block">
+                                        <div class="contact-name">
+                                            <span class="name-text">Аллергии</span>
+                                             {{ customer.medicalCard.allergies }}
                                         </div>
                                     </div>
                                 </div>
@@ -98,44 +111,62 @@
         data() {
             return {
                 customer: {},
-                medicalCard: {},
+                genders: {
+                    MALE: "Мужчина",
+                    FEMALE: "Женщина"
+                },
                 isCreateMedicalCard: false,
                 isCreateCustomer: false,
-                step: 0,
+                step: null,
+
             }
         },
         methods: {
             getCurrentCustomer() {
                 return getCustomer(store.getters['auth/user'].id)
             },
+            reloadData() {
+                this.loading = true
+                this.getCurrentCustomer()
+                    .then((response) => {
+                        this.customer = response.data[0]
+                        this.isCreateCustomer = true
+                        if (this.customer.medicalCard) {
+                            this.isCreateMedicalCard = true
+                        } else {
+                            this.step = 1
+                        }
+                        this.loading = false
+                    })
+                    .catch(() => {
+                        this.isCreateCustomer = false
+                        this.step = 0
+                        this.loading = false
+                    })
+            }
 
         },
         created() {
-            this.loading = false
-            this.getCurrentCustomer()
-                .then((response) => {
-                    this.customer = response.data[0]
-                    this.isCreateCustomer = true
-                    if(this.customer.medicalCard){
-                        this.step = 2
-                        this.isCreateMedicalCard = true
-                    }
-                    else {
-                        this.step = 1
-                    }
-                    this.loading = false
-                })
-                .catch(() => {
-                    this.isCreateCustomer = false
-                    this.step = 0
-                    this.loading = false
-                })
-        }
+            this.reloadData()
+        },
     };
 </script>
 
 <style lang="scss">
     .dashboard-container {
         margin-top: 200px;
+    }
+
+    .name-text {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: .85rem;
+        color: #999;
+        display: block;
+    }
+
+    .contact-name {
+        max-width: 100%;
+        word-wrap: break-word;
     }
 </style>

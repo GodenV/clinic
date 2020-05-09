@@ -1,5 +1,5 @@
 <template>
-    <form class="columns is-multiline" @submit.prevent="performSubmit">
+    <form class="columns is-multiline" style="overflow: auto" @submit.prevent="performSubmit">
         <h2 class="column is-12 title has-text-dark has-text-centered">
             Мед. карта
         </h2>

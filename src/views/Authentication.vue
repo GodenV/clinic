@@ -91,6 +91,10 @@
 
     @media screen and (max-width: 600px) {
 
+        i {
+            font-family: "Font Awesome 5 Free" !important;
+        }
+
         .auth-container {
             .sign-up-container {
                 width: 100% !important;

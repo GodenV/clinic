@@ -15,7 +15,7 @@
                 <b-input v-model="customerForm.name" required></b-input>
             </b-field>
 
-             <b-field label="Отчество"
+            <b-field label="Отчество"
                      class="column is-8-desktop is-offset-2-desktop is-10-tablet is-offset-1-tablet is-10-mobile is-offset-1-mobile">
                 <b-input v-model="customerForm.lastName" required></b-input>
             </b-field>
@@ -45,11 +45,11 @@
 
 <script>
     import store from '@/store/index'
-    import { createCustomer, updateCustomer } from '@/api/customers'
+    import {createCustomer, updateCustomer} from '@/api/customers'
 
     export default {
         name: "CustomerForm",
-        props:['customerId', 'afterSubmit'],
+        props: ['customerId', 'afterSubmit'],
         data() {
             return {
                 loading: false,
@@ -62,17 +62,24 @@
                 },
             }
         },
-        methods:{
-            selectSubmitMethod(){
-                if(this.customerId)
-                    return updateCustomer(this.customerId,this.customerForm)
+        methods: {
+            selectSubmitMethod() {
+                if (this.customerId)
+                    return updateCustomer(this.customerId, this.customerForm)
                 return createCustomer(this.customerForm)
             },
-            performSubmit(){
+            performSubmit() {
+                this.loading = true
                 this.selectSubmitMethod()
-                .then()
+                    .then(() => {
+                        this.afterSubmit()
+                        this.loading = false
+                    })
+                    .catch(() => {
+                        this.loading = false
+                    })
             }
-    }
+        }
     }
 </script>
 

@@ -81,7 +81,7 @@ const router = new Router({
             path: '/doctor',
             name: 'doctor-dashboard',
             component: DoctorDashboard,
-            meta: {roles: ['ROLE_DOCTOR']}
+            meta: {roles: ['ROLE_DOCTOR', 'ROLE_ADMIN']}
         }
     ]
 })

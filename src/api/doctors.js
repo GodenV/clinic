@@ -1,5 +1,13 @@
 import {HTTP} from "./http";
 
+export const getDoctor = (userId) => {
+  return new Promise((resolve, reject) => {
+    return HTTP.get(`/doctors/?userId=${userId}`)
+      .then(response => ((response.status === 200) ? resolve : reject)(response))
+      .catch(error => reject(error.response))
+  })
+}
+
 export const getDoctors = () => {
   return new Promise((resolve, reject) => {
     return HTTP.get(`/doctors`)

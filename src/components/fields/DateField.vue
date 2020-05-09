@@ -61,7 +61,7 @@ export default {
 
   methods: {
     getString (date) {
-      let parsedDate = dayjs(date).format('DD.MM.YYYY')
+      let parsedDate = dayjs(date).format('YYYY-MM-DD')
       this.$emit('update:stringDate', parsedDate)
     }
   }
