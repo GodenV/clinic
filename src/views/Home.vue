@@ -165,7 +165,7 @@
                             >
                                 <div class="icon-box-wrapper">
                                     <div class="icon-box">
-                                        <i class="fas fa-coins"/>
+                                        <i class="fas fa-user-shield"/>
                                     </div>
                                 </div>
                                 <div class="box-title">
@@ -183,7 +183,7 @@
                             >
                                 <div class="icon-box-wrapper">
                                     <div class="icon-box">
-                                        <i class="fas fa-car-alt"/>
+                                        <i class="fas fa-microchip"/>
                                     </div>
                                 </div>
                                 <div class="box-title">
@@ -332,7 +332,7 @@
                 departments: [],
                 doctors: [],
                 carouselSettings: {
-                    "infinite": true,
+                    "infinite":  true,
                     "slidesToShow": 3,
                     "speed": 500,
                     "rows": 2,

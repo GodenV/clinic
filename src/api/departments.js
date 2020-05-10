@@ -8,6 +8,14 @@ export const getDepartments = () => {
   })
 }
 
+export const getDepartment = (id) => {
+  return new Promise((resolve, reject) => {
+    return HTTP.get(`/departments/${id}`)
+      .then(response => ((response.status === 200) ? resolve : reject)(response))
+      .catch(error => reject(error.response))
+  })
+}
+
 export const updateDepartment = (id, model) => {
   return new Promise((resolve, reject) => {
     return HTTP.put(`/departments/${id}/`, model)

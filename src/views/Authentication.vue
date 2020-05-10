@@ -91,8 +91,8 @@
 
     @media screen and (max-width: 600px) {
 
-        i {
-            font-family: "Font Awesome 5 Free" !important;
+        .fas {
+            font-family: 'Font Awesome 5 Free';
         }
 
         .auth-container {
@@ -125,7 +125,7 @@
         }
 
         * {
-            font-family: Nunito;
+            font-family: 'Font Awesome 5 Free', Nunito;
         }
 
         .auth-block {

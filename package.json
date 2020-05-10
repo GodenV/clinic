@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "buefy": "^0.8.15",
-    "bulma": "^0.8.1",
+    "buefy": "^0.8.17",
+    "bulma": "^0.8.2",
     "bulma-divider": "^0.2.0",
     "core-js": "^3.6.4",
     "dayjs": "^1.8.26",

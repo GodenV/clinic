@@ -246,14 +246,14 @@ TABLE OF CONTENTS
 .square-icon-box {
     text-align: center;
     &:hover .icon-box-wrapper .icon-box:after {
-        transform: scale(1);
+        transform: scale(0.9);
     }
     //rounded style
     &.rounded {
         .icon-box {
             border-radius: 100px !important;
             &:after {
-                border-radius: 100px !important;
+                border-radius: 110px !important;
             }
         }
     }
@@ -280,14 +280,14 @@ TABLE OF CONTENTS
                 top: 16px;
             }
             &:after {
-                width: 115px;
-                height: 115px;
+                width: 124px;
+                height: 124px;
                 content:"";
                 display:block;
                 position:absolute;
                 z-index:1;
-                top:-8px;
-                left:-8px;
+                top:-12px;
+                left:-12px;
                 opacity: 0.8;
                 border-radius: 4px;
                 transform: scale(0.8);

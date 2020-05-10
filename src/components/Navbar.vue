@@ -69,18 +69,11 @@
                         Частые вопросы
                     </router-link>
                     <router-link
-                            :to="{name: 'payment'}"
+                            :to="{name: 'book-appointment'}"
                             class="navbar-item is-slide"
                             @click.native="navbarActive=false"
                     >
                         Записаться на прием
-                    </router-link>
-                    <router-link
-                            :to="{ name: 'investor' }"
-                            class="navbar-item is-slide"
-                            @click.native="navbarActive=false"
-                    >
-                        Инвестору
                     </router-link>
                 </div>
 
@@ -121,7 +114,7 @@
                     </div>
                     <div class="navbar-item">
                         <router-link
-                                :to="{name: 'client-dashboard'}"
+                                :to="{name: dash[this.$store.getters['auth/user'].roles[0]]}"
                                 class="button button-signup btn-outlined is-bold btn-align rounded raised"
                                 :class="[{'light-btn' : !faded && !transpanent}, {'secondary-btn': faded || transpanent}]"
                                 @click.native="navbarActive=false"
@@ -158,7 +151,12 @@
                 loginOpen: false,
                 navbarActive: false,
                 faded: false,
-                publicPath: process.env.BASE_URL
+                publicPath: process.env.BASE_URL,
+                dash: {
+                    ROLE_ADMIN: "admin-dashboard",
+                    ROLE_USER: "client-dashboard",
+                    ROLE_DOCTOR: "doctor-dashboard",
+                }
             }
         },
         computed: {
@@ -204,15 +202,15 @@
 </script>
 
 <style lang="scss">
-    .navbar-item{
-        &:focus{
+    .navbar-item {
+        &:focus {
             background-color: transparent !important;
         }
     }
 
     .start-nav {
-        background-color: rgba(40, 35, 250,0.8) !important;
-        box-shadow:0 0 10px rgba(0,0,0,0.5);
+        background-color: rgba(40, 35, 250, 0.8) !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius-bottomleft: 3px;
         border-radius-bottomright: 3px;
 

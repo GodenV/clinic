@@ -1,7 +1,7 @@
 <template>
     <div>
         <section class="section dashboard-section">
-        <Navbar/>
+            <Navbar/>
         </section>
         <div v-if="!(isCreateMedicalCard && isCreateCustomer)">
             <section
@@ -74,7 +74,7 @@
                                     <div class="contact-block">
                                         <div class="contact-name">
                                             <span class="name-text">Аллергии</span>
-                                             {{ customer.medicalCard.allergies }}
+                                            {{ customer.medicalCard.allergies }}
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,59 @@
                         </div>
                     </div>
                     <div class="columns column no-margin is-6">
-
+                        <b-table v-if="appointments.length"
+                                 :data="appointments"
+                                 :row-class="(row, index) => {
+                                  let time = new Date(row.dateTime)
+                                  if (row.customerDto ) {
+                                  if (time < Date.now() && (row.recommendations || row.diagnosis))
+                                      return 'r-green'
+                                  if (time < Date.now() && (!row.recommendations || !row.diagnosis))
+                                   return 'r-red'
+                                   } else {
+                                   return 'r-grey'
+                                   }
+                             }"
+                                 detailed>
+                            <template slot-scope="props">
+                                <b-table-column field="id" label="ID" width="100" searchable sortable numeric>
+                                    {{ props.row.id }}
+                                </b-table-column>
+                                <b-table-column field="name" label="ФИО" searchable sortable>
+                                    {{ props.row.doctorDto ? props.row.doctorDto.surname +
+                                    " "+props.row.doctorDto.name+" "+props.row.doctorDto.lastName : "Не занят"}}
+                                </b-table-column>
+                                <b-table-column field="phone" label="Время" searchable sortable>
+                                    {{ props.row.dateTime }}
+                                </b-table-column>
+                                <b-table-column class="has-text-centered" label="Удалить">
+                                    <b-button type="is-danger" @click="onDeleteAppointment(props.row.id)"
+                                              v-if="new Date() < new Date(props.row.dateTime)">
+                                        Отменить
+                                    </b-button>
+                                </b-table-column>
+                            </template>
+                            <template slot="detail" slot-scope="props">
+                                <h2>
+                                    Причина:
+                                </h2>
+                                <span>
+                            {{props.row.reason}}
+                        </span>
+                                <h2>
+                                    Диагноз:
+                                </h2>
+                                <span>
+                            {{props.row.diagnosis}}
+                        </span>
+                                <h2>
+                                    Рекомендации:
+                                </h2>
+                                <span>
+                            {{props.row.recommendations}}
+                        </span>
+                            </template>
+                        </b-table>
                     </div>
                 </div>
                 <BLoading
@@ -101,6 +153,7 @@
     import Navbar from '@/components/Navbar'
     import {getCustomer} from '@/api/customers'
     import store from '@/store/index'
+    import {getCustomerAppointments} from '@/api/appointments'
 
     export default {
         components: {
@@ -115,6 +168,7 @@
                     MALE: "Мужчина",
                     FEMALE: "Женщина"
                 },
+                appointments: [],
                 isCreateMedicalCard: false,
                 isCreateCustomer: false,
                 step: null,
@@ -125,11 +179,23 @@
             getCurrentCustomer() {
                 return getCustomer(store.getters['auth/user'].id)
             },
+            getAppointmentsList() {
+                this.loading = true
+                getCustomerAppointments(this.customer.id)
+                    .then((response) => {
+                        this.appointments = response.data
+                        this.loading = false
+                    })
+                    .catch(() => {
+                        this.loading = false
+                    })
+            },
             reloadData() {
                 this.loading = true
                 this.getCurrentCustomer()
                     .then((response) => {
                         this.customer = response.data[0]
+                        this.getAppointmentsList()
                         this.isCreateCustomer = true
                         if (this.customer.medicalCard) {
                             this.isCreateMedicalCard = true

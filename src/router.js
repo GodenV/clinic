@@ -8,6 +8,7 @@ import ClientDashboard from '@/views/client/Dashboard'
 import AdminDashboard from '@/views/admin/AdminDashboard'
 import DoctorDashboard from '@/views/doctor/DoctorDashboard'
 import FAQ from '@/views/FAQ'
+import BookAppointment from '@/views/BookAppointment'
 
 Vue.use(Router)
 
@@ -56,6 +57,14 @@ const router = new Router({
             component: FAQ
         },
         {
+            path: '/appointments',
+            name: 'book-appointment',
+            component: BookAppointment,
+            meta: {
+                roles: ['ROLE_USER']
+            }
+        },
+        {
             path: '/authentication',
             name: 'authentication',
             component: Auth,
@@ -68,7 +77,7 @@ const router = new Router({
             name: 'client-dashboard',
             component: ClientDashboard,
             meta: {
-                roles: ['ROLE_ADMIN', 'ROLE_USER']
+                roles: ['ROLE_USER']
             }
         },
         {
@@ -81,8 +90,9 @@ const router = new Router({
             path: '/doctor',
             name: 'doctor-dashboard',
             component: DoctorDashboard,
-            meta: {roles: ['ROLE_DOCTOR', 'ROLE_ADMIN']}
-        }
+            meta: {roles: ['ROLE_DOCTOR']}
+        },
+
     ]
 })
 
@@ -114,10 +124,9 @@ router.beforeEach((to, from, next) => {
     }
 
     if (to.meta.roles && !accessToken) {
-        return next({name: 'login'})
+        return next({name: 'authentication'})
     } else if (to.meta.roles && accessToken) {
         if (store.state.auth.user.roles === undefined) {
-             console.log("asadsadasdads")
             const watcher = store.watch((state) => state.auth.user, () => {
                 watcher()
                 checkPermission(to, from, next)

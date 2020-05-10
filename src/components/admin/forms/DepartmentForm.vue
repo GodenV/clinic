@@ -105,16 +105,20 @@
                 this.loading = true
 
                 this.selectSubmitMethod()
-                    .then(() => {
-                         if (this.departmentPhoto instanceof File) {
-                             let formData = new FormData()
-                             formData.append('file', this.departmentPhoto)
-                             addDepartmentPhoto(this.id, formData)
-                                 .then(() => {
-                                     this.$emit('close')
-                                     this.loading = false
-                                 })
-                         }
+                    .then((response) => {
+                        if (this.departmentPhoto instanceof File) {
+                            let id = response.data.departmentId || this.id
+                            let formData = new FormData()
+                            formData.append('file', this.departmentPhoto)
+                            addDepartmentPhoto(id, formData)
+                                .then(() => {
+                                    this.$emit('close')
+                                    this.loading = false
+                                })
+                        } else {
+                            this.loading = false
+                            this.$emit('close')
+                        }
                     })
                     .catch((error) => {
                         console.log(error)

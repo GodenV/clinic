@@ -1,5 +1,5 @@
 <template>
-    <form @action.prevent="submitForm">
+    <form @submit.prevent="submitForm">
         <div class="modal-card appointment-form">
             <header class="modal-card-head">
                 <p class="modal-card-title">Создание талонов</p>
@@ -18,12 +18,14 @@
                 </b-field>
                 <b-field label="Переодиччность">
                     <b-input
+                            v-model="appointmentsForm.gap"
                             type="number"
                             required>
                     </b-input>
                 </b-field>
                 <b-field label="Количесвто талонов">
                     <b-input
+                            v-model="appointmentsForm.ticketsNumber"
                             type="number"
                             required>
                     </b-input>
@@ -32,7 +34,7 @@
             </section>
             <footer class="modal-card-foot">
                 <button class="button" type="button" @click="$parent.close()">Закрыть</button>
-                <button class="button is-primary">Создать</button>
+                <button type="submit" class="button is-primary">Создать</button>
             </footer>
         </div>
     </form>
@@ -47,6 +49,7 @@
         props: ['doctorId', 'afterSubmit'],
         data() {
             return {
+                dateTime: new Date(),
                 appointmentsForm: {
                     doctorId: this.doctorId,
                     startTime: new Date(),
@@ -60,12 +63,17 @@
         },
         methods: {
             submitForm() {
+                this.appointmentsForm.startTime = this.toStringDate()
                 createAppointments(this.appointmentsForm)
+                .then(()=> {
+                        this.afterSubmit()
+                        this.$parent.close()
+                }
+                )
             },
-            getString(date) {
-                let parsedDate = dayjs(date).format('YYYY-MM-DD')
-                this.$emit('update:stringDate', parsedDate)
-            }
+            toStringDate() {
+                return dayjs(this.appointmentsForm.startTime).format('YYYY-MM-DD HH:mm')
+            },
         }
     }
 </script>

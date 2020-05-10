@@ -184,7 +184,8 @@
             selectUserMethod() {
                 if (!this.userId)
                     return createUser(this.userForm).then((response) => {
-                        this.doctorForm.userId = response.data.id})
+                        this.doctorForm.userId = response.data.id
+                    })
                 return Promise.resolve()
 
             },
@@ -195,15 +196,20 @@
                 this.selectUserMethod()
                     .then(() => {
                         this.selectSubmitMethod()
-                            .then(() => {
+                            .then((response) => {
+                                let id = response.data.doctorId || this.doctorId
                                 if (this.doctorPhoto instanceof File) {
                                     let formData = new FormData()
                                     formData.append('file', this.doctorPhoto)
-                                    addDoctorPhoto(this.doctorId, formData)
+                                    addDoctorPhoto(id, formData)
                                         .then(() => {
                                             this.$emit('close')
                                             this.loading = false
                                         })
+                                }
+                                else {
+                                    this.loading = false
+                                    this.$emit('close')
                                 }
                             })
                             .catch((error) => {
