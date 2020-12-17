@@ -6,14 +6,14 @@ export default {
 
     state: {
         accessToken: '',
-        user: {}
+        user: undefined
     },
 
     getters: {
-        isAuthenticated: state => !!state.accessToken,
-        isUser: state => state.user !== {} ? state.user.roles.includes("ROLE_USER") : false,
-        isDoctor: state => state.user !== {} ? state.user.roles.includes("ROLE_DOCTOR") : false,
-        isAdmin: state => state.user !== {} ? state.user.roles.includes("ROLE_ADMIN") : false,
+        isAuthenticated: state => !!state.accessToken && state.accessToken !== '' && !!state.user,
+        isUser: state => state.user != undefined ? state.user.roles.includes("ROLE_USER") : false,
+        isDoctor: state => state.user != undefined ? state.user.roles.includes("ROLE_DOCTOR") : false,
+        isAdmin: state => state.user !== undefined ? state.user.roles.includes("ROLE_ADMIN") : false,
         user: state => state.user,
 
     },
@@ -26,8 +26,10 @@ export default {
                 requestLogin(model)
                     .then(response => {
                         commit('SET_ACCESS_TOKEN', response.data.token)
-                        resolve(dispatch('getCurrentUser'))
                     })
+                    .then(() => {
+                        resolve(dispatch('getCurrentUser'))
+                    }) 
                     .catch(error => {
                         console.error(error)
                         reject(error)
@@ -99,7 +101,7 @@ export default {
         },
 
         REMOVE_USER(state) {
-            state.user = {}
+            state.user = undefined
         }
 
     }

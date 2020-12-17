@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index'
+import Stats from '@/views/Stats'
+
+import VideoChat from '@/views/VideoChat'
 
 import Home from '@/views/Home'
 import Auth from '@/views/Authentication'
@@ -40,16 +43,26 @@ function checkPermission(to, from, next) {
 const router = new Router({
 
     scrollBehavior() {
-        return {x: 0, y: 0}
+        return { x: 0, y: 0 }
     },
 
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '/',
+            path: '',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/chat',
+            name: 'chat',
+            component: VideoChat
+        },
+        {
+            path: '/statistic',
+            name: 'stats',
+            component: Stats
         },
         {
             path: '/faq',
@@ -84,15 +97,18 @@ const router = new Router({
             path: '/admin',
             name: 'admin-dashboard',
             component: AdminDashboard,
-            meta: {roles: ['ROLE_ADMIN']}
+            meta: { roles: ['ROLE_ADMIN'] }
         },
         {
             path: '/doctor',
             name: 'doctor-dashboard',
             component: DoctorDashboard,
-            meta: {roles: ['ROLE_DOCTOR']}
+            meta: { roles: ['ROLE_DOCTOR'] }
         },
-
+        {
+            path: '**',
+            redirect: '/'
+        }
     ]
 })
 
@@ -124,9 +140,9 @@ router.beforeEach((to, from, next) => {
     }
 
     if (to.meta.roles && !accessToken) {
-        return next({name: 'authentication'})
+        return next({ name: 'authentication' })
     } else if (to.meta.roles && accessToken) {
-        if (store.state.auth.user.roles === undefined) {
+        if (store.state.auth.user === undefined) {
             const watcher = store.watch((state) => state.auth.user, () => {
                 watcher()
                 checkPermission(to, from, next)

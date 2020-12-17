@@ -7,7 +7,7 @@
             <section class="modal-card-body">
                 <b-field label="Select datetime">
                     <b-datetimepicker
-                            v-model="appointmentsForm.startTime"
+                            v-model="startTime"
                             placeholder="Select a date"
                             icon="calendar"
                             :timepicker="timepicker"
@@ -49,6 +49,7 @@
         props: ['doctorId', 'afterSubmit'],
         data() {
             return {
+                startTime: new Date(),
                 dateTime: new Date(),
                 appointmentsForm: {
                     doctorId: this.doctorId,
@@ -63,7 +64,7 @@
         },
         methods: {
             submitForm() {
-                this.appointmentsForm.startTime = this.toStringDate()
+                this.appointmentsForm.startTime = this.toStringDate(this.startTime)
                 createAppointments(this.appointmentsForm)
                 .then(()=> {
                         this.afterSubmit()
@@ -71,8 +72,8 @@
                 }
                 )
             },
-            toStringDate() {
-                return dayjs(this.appointmentsForm.startTime).format('YYYY-MM-DD HH:mm')
+            toStringDate(datetime) {
+                return dayjs(datetime).format('YYYY-MM-DD HH:mm')
             },
         }
     }

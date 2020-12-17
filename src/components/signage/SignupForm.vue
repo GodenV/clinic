@@ -5,6 +5,7 @@
                 v-if="errorMsg"
                 type="is-danger"
                 :auto-close="true"
+                :position="is-bottom-right"
                 :duration="5000"
         >
             {{errorMsg}}
@@ -83,22 +84,32 @@
 
             performSignup() {
                 this.loading = true
+                this.errorMsg = undefined
                 if(this.signupForm.password === this.confirmPassword) {
                     this.signup(this.signupForm)
                         .then(() => {
                             this.loading = false
                             this.$router.push({name: 'client-dashboard'})
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.loading = false
-                            this.errorMsg = "Такой логин уже существует"
-                            this.$refs.observer.setErrors(error.data)
+                            this.showErrorNotification("Такой логин уже существует")
                         })
                 }
                 else {
-                    this.errorMsg = "Пароли не совпадают"
+                    this.showErrorNotification("Пароли не совпадают")
                     this.loading = false
                 }
+            },
+
+            showErrorNotification(message) {
+                this.$buefy.notification.open({
+                    duration: 5000,
+                    message: message,
+                    position: 'is-bottom-right',
+                    type: 'is-danger',
+                    hasIcon: true
+                })
             }
         }
     }

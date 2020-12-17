@@ -3,7 +3,7 @@
     <b-datepicker
       :position="isBottom ? 'is-top-left' : 'is-bottom-left'"
       v-model="dateField"
-      size="is-medium"
+      size="is-small"
       editable
       placeholder="ДД.ММ.ГГГГ"
       @input="getString"
@@ -23,12 +23,11 @@ export default {
 
   },
 
-  props: ['label', 'stringDate'],
+  props: ['label', 'stringDate', 'isBottom'],
 
   data () {
     return {
       dateField: null,
-      isBottom: false,
     }
   },
 
@@ -48,16 +47,16 @@ export default {
 
   },
 
-  mounted () {
-    this.dateField = dateParse(this.stringDate)
-    window.addEventListener('scroll', () => {
-        if (this.$el.offsetTop + this.$el.offsetHeight + 500 > window.innerHeight + window.scrollY) {
-          this.isBottom = true
-        } else {
-          this.isBottom = false
-        }
-      })
-  },
+  // mounted () {
+  //   this.dateField = dateParse(this.stringDate)
+  //   window.addEventListener('scroll', () => {
+  //       if (this.$el.offsetTop + this.$el.offsetHeight + 500 > window.innerHeight + window.scrollY) {
+  //         this.isBottom = true
+  //       } else {
+  //         this.isBottom = false
+  //       }
+  //     })
+  // },
 
   methods: {
     getString (date) {

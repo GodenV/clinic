@@ -24,11 +24,6 @@
                     <div class="p-t-md"/>
 
                     <div class="content">
-                        <router-link :to="{name: 'payment'}">
-                            <nav class="level has-text-centered is-mobile social">
-
-                            </nav>
-                        </router-link>
                     </div>
 
                     <div class="content">

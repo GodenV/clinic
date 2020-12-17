@@ -8,7 +8,7 @@
                     {{ props.row.id }}
                 </b-table-column>
                 <b-table-column field="name" label="ФИО" searchable sortable>
-                    {{ props.row.name + props.row.surname + props.row.lastName}}
+                    {{ props.row.name + ' ' + props.row.surname + ' ' + props.row.lastName}}
                 </b-table-column>
                 <b-table-column field="specialization" label="Специализация" searchable sortable>
                     {{ props.row.specialization}}

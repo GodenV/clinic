@@ -24,7 +24,6 @@ export const createAppointments = (model) => {
   })
 }
 
-
 export const updateAppointment = (id, model) => {
   return new Promise((resolve, reject) => {
     return HTTP.put(`/appointments/${id}`, model)

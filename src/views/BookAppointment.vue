@@ -33,10 +33,10 @@
                 </div>
             </b-step-item>
 
-            <b-step-item :clickable=true label="Врачи" icon="account">
-                <div class="columns is-multiline is-centered">
+            <b-step-item :clickable="!!selectDepartment" label="Врачи" icon="account">
+                <div class="columns is-multiline is-centered" v-if="selectDepartment !== undefined">
                     <div class="column is-12 has-text-centered">
-                        <h1 class="is-size-2 padding-10">{{selectDepartment.name}}</h1>
+                        <h1 class="is-size-2 padding-10" >{{selectDepartment.name}}</h1>
                         <div class="head-line margin-10" style="width: 50vw"></div>
                         <div class="head-line margin-10" style="width: 35vw"></div>
                         <div class="head-line margin-10" style="width: 25vw"></div>
@@ -46,7 +46,7 @@
                             <img class="border-radius: 5px" :src="selectDepartment.imageUrl">
                         </figure>
                     </div>
-                    <div class="column is-8">
+                    <div class="column is-8" >
                         <span class="has-text-grey is-size-4">Номер телефона: {{selectDepartment.phone}}<br/></span>
                         <span class="has-text-grey-dark is-size-4">Описание:<br/></span>
                         <span class="has-text-grey is-size-5"> {{selectDepartment.description}}</span>
@@ -70,7 +70,7 @@
                 </div>
             </b-step-item>
 
-            <b-step-item class="final-appointments" :clickable=true label="Social" icon="account-plus">
+            <b-step-item class="final-appointments" :clickable=true label="Талоны" icon="account-plus"  v-if="selectDepartment !== undefined">
                 <div class="columns is-multiline">
                     <div class="column is-12 has-text-centered">
                         <h1 class="is-size-2 padding-10">{{selectDepartment.name}}</h1>
@@ -83,7 +83,7 @@
                             <img class="border-radius: 5px" :src="selectDepartment.imageUrl">
                         </figure>
                     </div>
-                    <div v-if="selectedDoctor()"
+                    <div v-if="selectDepartment && selectedDoctor()"
                          class="doctor margin-30 column is-narrow">
                         <div class="is-size-5 has-text-centered">
                             {{this.selectedDoctor().name +" "+ this.selectedDoctor().surname +" "+
@@ -170,7 +170,7 @@
                 filterDate: new Date(),
                 appointments: [],
                 departments: [],
-                selectDepartment: {},
+                selectDepartment: undefined,
                 selectDepartmentId: 0,
                 selectDoctorId: 0,
                 appForm: {},
@@ -240,7 +240,6 @@
         },
         watch: {
             selectDoctorId: function (id) {
-                console.log("sadasdasd")
                 getAppointments(id, dayjs(this.filterDate).format('YYYY-MM-DD'))
                     .then((response) => {
                         this.appointments = response.data

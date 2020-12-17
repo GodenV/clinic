@@ -60,10 +60,10 @@
                                 </b-select>
                             </b-field>
 
-                            <upload-field
+                            <upload-field required
                                     class="column is-offset-1"
-                                    rules="required"
-                                    title="Фото отделения"
+                                    
+                                    title="Фото врача"
                                     :files.sync="doctorPhoto"
                             />
                         </div>

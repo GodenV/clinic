@@ -19,7 +19,7 @@
             <b-input v-model="cardForm.weight" type="number" required></b-input>
         </b-field>
 
-        <b-field class="column is-2" label="Категория">
+        <b-field class="column is-2" label="Пол">
             <b-select v-model="cardForm.gender" required>
                 <option value="FEMALE">Женщина</option>
                 <option value="MALE">Мужчина</option>
@@ -27,7 +27,8 @@
         </b-field>
 
         <DateField
-                class="column is-2"
+                :isBottom = false
+                class="column is-2 date-field"
                 :label="'Дата Рождения'"
                 :string-date.sync="cardForm.birthday"
         />
@@ -46,6 +47,7 @@
             <button
                     type="submit"
                     class="button is-medium is-fullwidth raised is-rounded primary-btn no-margin-bottom"
+                    id = "save"
             >
                 Сохранить
             </button>
@@ -99,6 +101,15 @@
     }
 </script>
 
-<style scoped>
+<style lang = 'scss'>
 
+    #save {
+        margin-top: 5vh;
+    }
+
+    .date-field {
+        input {
+            height: 4vh;
+        }
+    }
 </style>

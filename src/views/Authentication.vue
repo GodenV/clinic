@@ -40,7 +40,7 @@
                                         систему с вашей личной
                                         информацией</p>
                                     <div class="is-size-5-desktop is-size-6-tablet is-size-6-mobile button light-btn button-signup btn-outlined is-bold btn-align rounded raised"
-                                         @click="change">Зарегестророваться
+                                         @click="change">Зарегистрироваться
                                     </div>
                                 </div>
                             </div>

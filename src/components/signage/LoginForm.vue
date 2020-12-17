@@ -83,7 +83,7 @@
                     })
                     .catch(() => {
                         this.loading = false
-                        this.errorMsg = 'Неправильный номер телефона или пароль'
+                        this.errorMsg = 'Неправильный логин или пароль'
                     })
             },
         }

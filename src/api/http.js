@@ -27,10 +27,10 @@ export const HTTP = axios.create({
 })
 
 HTTP.interceptors.response.use(response => {
-        return response
-    },
+    return response
+},
     error => {
-        const {config, data: {messages}} = error.response
+        const { config, data: { messages } } = error.response
         let message
         try {
             message = messages[0].message
@@ -62,10 +62,9 @@ HTTP.interceptors.response.use(response => {
     })
 
 const appMap = {
-    development: 'http://localhost:8080',
+    development: 'http://localhost:8082',
     staging: 'https://powerful-wildwood-98189.herokuapp.com',
     production: 'https://win2.by'
-
 }
 
 export const appUrl = appMap[env]

@@ -85,7 +85,6 @@
         created() {
             let department = this.getDepartment()
             if (department.name) {
-                console.log(department)
                 this.departmentForm.phone = department.phone
                 this.departmentForm.description = department.description
                 this.departmentForm.name = department.name
@@ -121,7 +120,6 @@
                         }
                     })
                     .catch((error) => {
-                        console.log(error)
                         this.loading = false
                         this.errorMsg = error.data
                     })

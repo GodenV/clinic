@@ -1,7 +1,7 @@
 <template>
     <yandex-map
-  :coords="[54.62896654088406, 39.731893822753904]"
-  zoom="10"
+  :coords="[53.91157331711759,27.595728338782244]"
+  zoom="17"
   style="height: 600px;"
   :cluster-options="{
     1: {clusterDisableClickZoom: true}
@@ -11,7 +11,7 @@
     <ymap-marker
             marker-id="1"
       marker-type="placemark"
-      :coords="[54.6, 39.8]"
+      :coords="[53.91157331711759,27.595728338782244]"
       hint-content="Hint content 1"
       :balloon="{header: 'header', body: 'body', footer: 'footer'}"
       :icon="{color: 'blue', glyph: 'heart'}"
@@ -37,7 +37,7 @@
                 },
                 placemarks: [
       {
-        coords: [54.8, 39.8],
+        coords: [53.9, 27.6],
         properties: {}, // define properties here
         options: {}, // define options here
         clusterName: "1",
